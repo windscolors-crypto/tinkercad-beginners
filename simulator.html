@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>محاكي القطع للمبتدئات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#1f2430;--light:#f4f1ea;--card:#fbfaf6;--acc:#c2562b;--acc2:#e8875e;--soft:#4a5060;--ok:#2e8b57;--bad:#c0392b}
+*{box-sizing:border-box;margin:0}
+body{font-family:Tajawal,Tahoma,sans-serif;background:var(--light);color:var(--dark);min-height:100vh}
+header{background:var(--dark);color:var(--light);padding:18px 16px 14px}
+header h1{font-size:clamp(22px,4vw,34px);font-weight:800}
+header p{color:#c9cdd6;font-size:clamp(14px,2.2vw,18px);margin-top:4px}
+header a{color:var(--acc2)}
+nav{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;background:#2a303d;position:sticky;top:0;z-index:5}
+nav button{flex:none;font-family:inherit;font-size:16px;font-weight:700;border:0;border-radius:999px;padding:9px 16px;background:#3a4152;color:#f4f1ea;cursor:pointer}
+nav button.on{background:var(--acc2);color:var(--dark)}
+main{max-width:1100px;margin:0 auto;padding:18px 16px 40px}
+.lab{display:none}.lab.on{display:block}
+.lab h2{font-size:clamp(22px,3.6vw,32px);font-weight:800;margin-bottom:6px}
+.lab .sub{color:var(--soft);font-size:clamp(15px,2.2vw,19px);margin-bottom:14px}
+.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.stage{background:#fff;border-radius:18px;padding:12px;box-shadow:0 2px 10px rgba(31,36,48,.08)}
+.stage svg{width:100%;height:auto;display:block}
+.panel{background:var(--card);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.panel h3{font-size:19px;font-weight:800;color:var(--acc)}
+.ctrl{display:flex;flex-direction:column;gap:6px}
+.ctrl label{font-weight:700;font-size:17px}
+.big{font-family:inherit;font-size:18px;font-weight:800;border:0;border-radius:14px;padding:14px 18px;cursor:pointer;background:var(--dark);color:var(--light);touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.big.alt{background:var(--acc2);color:var(--dark)}
+.big.press:active,.big.press.down{transform:scale(.97);background:var(--acc)}
+input[type=range]{width:100%;accent-color:var(--acc);height:34px}
+.read{font-size:26px;font-weight:800}
+.msg{border-radius:12px;padding:12px 14px;font-size:17px;line-height:1.6;background:#eef0f4}
+.msg.good{background:#e3f4ea;color:#1e5e3a}.msg.bad{background:#fbe4e1;color:#8a2a1e}
+.ask{border-right:6px solid var(--acc2);padding:4px 12px;font-size:17px;line-height:1.6;color:var(--soft)}
+.ask b{color:var(--dark)}
+.tog{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;cursor:pointer}
+.tog input{width:24px;height:24px;accent-color:var(--acc)}
+.smoke{animation:smoke 1.6s ease-out infinite}
+@keyframes smoke{0%{opacity:.8;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
+.wave{animation:wave 1s linear infinite}
+@keyframes wave{0%{opacity:.9}100%{opacity:0}}
+footer{text-align:center;color:var(--soft);font-size:14px;padding:16px}
+</style></head><body>
+<header><h1>محاكي القطع 🧪</h1><p>حرّكي كل قطعة بإيدك وشوفي شو بيصير، قبل ما نفتح Tinkercad · <a href="./">رجوع للعرض</a></p></header>
+<nav id="tabs">
+<button data-t="l1" class="on">١ اللمبة والمقاومة</button>
+<button data-t="l2">٢ الزر والمفتاح</button>
+<button data-t="l3">٣ المقاومة المتغيرة</button>
+<button data-t="l4">٤ حساس المسافة</button>
+<button data-t="l5">٥ السيرفو</button>
+<button data-t="l6">٦ البوابة الذكية</button>
+</nav>
+<main>
+
+<!-- LAB 1 -->
+<section class="lab on" id="l1">
+<h2>اللمبة والمقاومة</h2><p class="sub">شغّلي الدائرة. وبعدين جرّبي تشيلي المقاومة وشوفي شو بيصير.</p>
+<div class="grid">
+<div class="stage"><svg viewBox="0 0 600 360" aria-label="دائرة بطارية ومفتاح ومقاومة ولمبة">
+<rect x="0" y="0" width="600" height="360" fill="#fff"/>
+<path id="l1wire" d="M120 280 H480 V120 H400 M330 120 H120 V280" fill="none" stroke="#2b2b2b" stroke-width="6" stroke-linejoin="round"/>
+<g transform="translate(70,190)"><rect x="0" y="0" width="100" height="56" rx="8" fill="#3c4a5c"/><rect x="100" y="16" width="10" height="24" fill="#3c4a5c"/><text x="50" y="35" text-anchor="middle" fill="#fff" font-size="20" font-weight="700">9V</text></g>
+<g id="l1res" transform="translate(395,180)"><rect x="-6" y="0" width="12" height="80" fill="#fff"/><rect x="-14" y="10" width="28" height="60" rx="10" fill="#e8c9a0" stroke="#b08a5a" stroke-width="2"/><rect x="-14" y="20" width="28" height="7" fill="#c0392b"/><rect x="-14" y="33" width="28" height="7" fill="#c0392b"/><rect x="-14" y="46" width="28" height="7" fill="#7a4a1f"/><text x="34" y="46" font-size="18" fill="#4a5060">مقاومة</text></g>
+<g id="l1gap" transform="translate(480,180)" style="display:none"><rect x="-10" y="0" width="20" height="80" fill="#fff"/><path d="M0 0 V80" stroke="#2b2b2b" stroke-width="6"/></g>
+<g transform="translate(365,120)"><rect x="-38" y="-10" width="76" height="20" fill="#fff"/>
+<circle id="l1glow" cx="0" cy="-30" r="46" fill="#ff4d3d" opacity="0"/>
+<path id="l1led" d="M-20 10 V-30 A20 20 0 0 1 20 -30 V10 Z" fill="#8b1e1e" stroke="#5a1010" stroke-width="2"/>
+<path d="M-12 10 V30 M12 10 V24" stroke="#999" stroke-width="4"/>
+<g id="l1smoke" style="display:none"><circle class="smoke" cx="-6" cy="-52" r="10" fill="#9aa0aa"/><circle class="smoke" cx="8" cy="-60" r="13" fill="#b7bcc4" style="animation-delay:.5s"/></g>
+</g>
+<g transform="translate(250,280)"><rect x="-40" y="-10" width="80" height="20" fill="#fff"/><circle cx="-32" cy="0" r="7" fill="#2b2b2b"/><circle cx="32" cy="0" r="7" fill="#2b2b2b"/><line id="l1sw" x1="-32" y1="0" x2="28" y2="-34" stroke="#2b2b2b" stroke-width="7" stroke-linecap="round"/><text x="0" y="40" text-anchor="middle" font-size="18" fill="#4a5060">مفتاح</text></g>
+</svg></div>
+<div class="panel">
+<h3>التحكم</h3>
+<button class="big" id="l1btn">تشغيل الدائرة</button>
+<label class="tog"><input type="checkbox" id="l1hasres" checked> المقاومة موجودة</label>
+<button class="big alt" id="l1reset" style="display:none">لمبة جديدة 🔄</button>
+<p class="msg" id="l1msg">الدائرة طافية. اضغطي «تشغيل الدائرة».</p>
+<p class="ask"><b>فكّري:</b> ليش اللمبة احترقت لما شلنا المقاومة؟</p>
+</div></div></section>
+
+<!-- LAB 2 -->
+<section class="lab" id="l2">
+<h2>زر الضغط والمفتاح</h2><p class="sub">اضغطي على الزر وكمّلي ضاغطة، وبعدين اتركيه. وجرّبي المفتاح. شو الفرق؟</p>
+<div class="grid">
+<div class="stage"><svg viewBox="0 0 600 340" aria-label="لمبتان: واحدة بزر ضغط وواحدة بمفتاح">
+<rect width="600" height="340" fill="#fff"/>
+<g transform="translate(150,0)"><text x="0" y="40" text-anchor="middle" font-size="22" font-weight="800" fill="#1f2430">Pushbutton</text>
+<circle id="l2g1" cx="0" cy="130" r="56" fill="#ffd23d" opacity="0"/><path id="l2l1" d="M-24 160 V120 A24 24 0 0 1 24 120 V160 Z" fill="#8a7a2a"/><path d="M-12 160 V185 M12 160 V180" stroke="#999" stroke-width="4"/>
+<rect x="-46" y="215" width="92" height="92" rx="10" fill="#2b2b2b"/><circle id="l2cap" cx="0" cy="261" r="28" fill="#444"/></g>
+<g transform="translate(450,0)"><text x="0" y="40" text-anchor="middle" font-size="22" font-weight="800" fill="#1f2430">Slideswitch</text>
+<circle id="l2g2" cx="0" cy="130" r="56" fill="#4dd27a" opacity="0"/><path id="l2l2" d="M-24 160 V120 A24 24 0 0 1 24 120 V160 Z" fill="#2f6b42"/><path d="M-12 160 V185 M12 160 V180" stroke="#999" stroke-width="4"/>
+<rect x="-70" y="235" width="140" height="52" rx="10" fill="#2b2b2b"/><rect id="l2knob" x="-60" y="243" width="56" height="36" rx="6" fill="#d9dce2"/><text x="-32" y="318" text-anchor="middle" font-size="18" fill="#4a5060">طافي</text><text x="32" y="318" text-anchor="middle" font-size="18" fill="#4a5060">شغّال</text></g>
+</svg></div>
+<div class="panel">
+<h3>التحكم</h3>
+<button class="big press" id="l2push">اضغطي وكمّلي ضاغطة 👇</button>
+<button class="big alt" id="l2slide">حرّكي المفتاح ↔</button>
+<p class="msg" id="l2msg">جرّبي الاثنين.</p>
+<p class="ask"><b>فكّري:</b> جرس البيت زي أي وحدة فيهم؟ ومفتاح ضو الغرفة؟</p>
+</div></div></section>
+
+<!-- LAB 3 -->
+<section class="lab" id="l3">
+<h2>المقاومة المتغيرة</h2><p class="sub">لفّي الزر شوي شوي، وراقبي ضو اللمبة والرقم.</p>
+<div class="grid">
+<div class="stage"><svg viewBox="0 0 600 340" aria-label="مقاومة متغيرة تتحكم بضوء لمبة">
+<rect width="600" height="340" fill="#fff"/>
+<g transform="translate(170,190)"><circle r="100" fill="#3c4a5c"/><circle r="78" fill="#d9dce2"/><g id="l3knob"><circle r="60" fill="#5a6577"/><rect x="-6" y="-60" width="12" height="40" rx="4" fill="#ffd23d"/></g>
+<text y="135" text-anchor="middle" font-size="20" fill="#4a5060">0 ←  → 1023</text></g>
+<g transform="translate(440,170)"><circle id="l3glow" cx="0" cy="-10" r="80" fill="#ffd23d" opacity="0"/><path id="l3led" d="M-30 40 V-10 A30 30 0 0 1 30 -10 V40 Z" fill="#8a7a2a"/><path d="M-14 40 V70 M14 40 V64" stroke="#999" stroke-width="5"/></g>
+</svg></div>
+<div class="panel">
+<h3>التحكم</h3>
+<div class="ctrl"><label for="l3r">لفّي الزر</label><input dir="ltr" type="range" id="l3r" min="0" max="1023" value="0"></div>
+<p class="read">القيمة: <span id="l3v">0</span></p>
+<p class="msg" id="l3msg">القيمة صفر: اللمبة طافية.</p>
+<p class="ask"><b>فكّري:</b> شو الفرق بينها وبين الزر؟ كم درجة بيعطيكِ الزر؟</p>
+</div></div></section>
+
+<!-- LAB 4 -->
+<section class="lab" id="l4">
+<h2>حساس المسافة</h2><p class="sub">قرّبي السيارة من الحساس وبعّديها. الحساس بيقيس المسافة بصدى الصوت.</p>
+<div class="grid">
+<div class="stage"><svg viewBox="0 0 600 300" aria-label="سيارة تقترب من حساس مسافة">
+<rect width="600" height="300" fill="#fff"/><rect y="230" width="600" height="70" fill="#5b6270"/><path d="M0 265 H600" stroke="#fff" stroke-width="5" stroke-dasharray="30 22"/>
+<g transform="translate(540,150)"><rect x="-10" y="-60" width="34" height="140" rx="6" fill="#1d6fa5"/><circle cx="7" cy="-28" r="13" fill="#c9ccd2" stroke="#888" stroke-width="3"/><circle cx="7" cy="30" r="13" fill="#c9ccd2" stroke="#888" stroke-width="3"/><text x="7" y="100" text-anchor="middle" font-size="16" fill="#4a5060">الحساس</text></g>
+<g id="l4waves"></g>
+<g id="l4car"><rect x="0" y="160" width="150" height="50" rx="12" fill="#c2562b"/><rect x="25" y="125" width="95" height="45" rx="12" fill="#c2562b"/><rect x="38" y="133" width="32" height="28" rx="5" fill="#cfe7f5"/><rect x="76" y="133" width="32" height="28" rx="5" fill="#cfe7f5"/><circle cx="35" cy="214" r="18" fill="#222"/><circle cx="118" cy="214" r="18" fill="#222"/></g>
+</svg></div>
+<div class="panel">
+<h3>التحكم</h3>
+<div class="ctrl"><label for="l4r">مكان السيارة</label><input dir="ltr" type="range" id="l4r" min="0" max="100" value="10"></div>
+<p class="read">المسافة: <span id="l4v">0</span> سم</p>
+<label class="tog"><input type="checkbox" id="l4snd"> صوت التنبيه 🔊</label>
+<p class="msg" id="l4msg"></p>
+<p class="ask"><b>فكّري:</b> وين شفتي حساس زي هاد بحياتك؟</p>
+</div></div></section>
+
+<!-- LAB 5 -->
+<section class="lab" id="l5">
+<h2>محرك السيرفو</h2><p class="sub">اختاري الزاوية، والسيرفو بيروح عليها وبيوقف.</p>
+<div class="grid">
+<div class="stage"><svg viewBox="0 0 600 340" aria-label="محرك سيرفو بذراع تدور">
+<rect width="600" height="340" fill="#fff"/>
+<path d="M300 250 m-170 0 a170 170 0 0 1 340 0" fill="none" stroke="#e2ddd2" stroke-width="3" stroke-dasharray="6 8"/>
+<text x="470" y="275" font-size="18" fill="#4a5060" text-anchor="middle">0°</text><text x="300" y="70" font-size="18" fill="#4a5060" text-anchor="middle">90°</text><text x="130" y="275" font-size="18" fill="#4a5060" text-anchor="middle">180°</text>
+<rect x="240" y="230" width="120" height="80" rx="10" fill="#2d6fd6"/><text x="300" y="282" text-anchor="middle" font-size="20" fill="#fff" font-weight="700">SG90</text>
+<g id="l5arm" transform="translate(300,250) rotate(0)"><rect x="0" y="-11" width="150" height="22" rx="11" fill="#f2f2f2" stroke="#999" stroke-width="2"/><circle r="18" fill="#ddd" stroke="#999" stroke-width="2"/></g>
+</svg></div>
+<div class="panel">
+<h3>التحكم</h3>
+<div class="ctrl"><label for="l5r">الزاوية</label><input dir="ltr" type="range" id="l5r" min="0" max="180" value="0" step="1"></div>
+<p class="read">الزاوية: <span id="l5v">0</span>°</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="big alt" data-a="0">0°</button><button class="big alt" data-a="90">90°</button><button class="big alt" data-a="180">180°</button></div>
+<p class="msg">بالكود منكتب: <b dir="ltr">s1.write(90);</b> فبيروح لـ 90 وبيوقف هناك.</p>
+<p class="ask"><b>فكّري:</b> قديش لازم تكون الزاوية عشان ذراع البوابة يصير واقف لفوق؟</p>
+</div></div></section>
+
+<!-- LAB 6 -->
+<section class="lab" id="l6">
+<h2>البوابة الذكية: كل القطع مع بعض</h2><p class="sub">قرّبي السيارة من البوابة. الحساس بيشوفها ← الأردوينو بيقرر ← السيرفو بيفتح، واللمبة بتتغير.</p>
+<div class="grid">
+<div class="stage"><svg viewBox="0 0 600 320" aria-label="بوابة موقف ذكية">
+<rect width="600" height="320" fill="#fff"/><rect y="250" width="600" height="70" fill="#5b6270"/><path d="M0 285 H600" stroke="#fff" stroke-width="5" stroke-dasharray="30 22"/>
+<rect x="455" y="150" width="30" height="100" fill="#3c4a5c"/>
+<g id="l6arm" transform="translate(470,160) rotate(0)"><rect x="-150" y="-8" width="150" height="16" rx="6" fill="#f2f2f2" stroke="#c0392b" stroke-width="2"/><rect x="-140" y="-8" width="20" height="16" fill="#c0392b"/><rect x="-100" y="-8" width="20" height="16" fill="#c0392b"/><rect x="-60" y="-8" width="20" height="16" fill="#c0392b"/></g>
+<rect x="520" y="70" width="40" height="90" rx="8" fill="#2b2b2b"/><circle id="l6red" cx="540" cy="95" r="14" fill="#ff4d3d"/><circle id="l6grn" cx="540" cy="135" r="14" fill="#1f4d2e"/>
+<rect x="430" y="196" width="22" height="34" rx="4" fill="#1d6fa5"/><text x="441" y="190" font-size="14" text-anchor="middle" fill="#4a5060">حساس</text>
+<g id="l6car"><rect x="0" y="182" width="140" height="46" rx="12" fill="#2d6fd6"/><rect x="22" y="150" width="90" height="42" rx="12" fill="#2d6fd6"/><rect x="34" y="157" width="30" height="26" rx="5" fill="#cfe7f5"/><rect x="70" y="157" width="30" height="26" rx="5" fill="#cfe7f5"/><circle cx="32" cy="232" r="17" fill="#222"/><circle cx="110" cy="232" r="17" fill="#222"/></g>
+</svg></div>
+<div class="panel">
+<h3>التحكم</h3>
+<div class="ctrl"><label for="l6r">مكان السيارة</label><input dir="ltr" type="range" id="l6r" min="0" max="100" value="0"></div>
+<p class="read">المسافة: <span id="l6v">0</span> سم</p>
+<p class="msg" id="l6msg"></p>
+<p class="msg" style="direction:ltr;text-align:left;font-family:Consolas,monospace;font-size:15px">if (distance &lt; 30) { gate.write(90); green ON; }<br>else { gate.write(0); red ON; }</p>
+<p class="ask"><b>فكّري:</b> مين العيون؟ مين الدماغ؟ مين الإيدين؟</p>
+</div></div></section>
+</main>
+<footer>محاكي تعليمي مبسّط لطالبات مدرسة إناث الجوفة الإعدادية · للتجربة الحقيقية نستخدم Tinkercad</footer>
+<script>
+const $=id=>document.getElementById(id);
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.lab').forEach(l=>l.classList.toggle('on',l.id===b.dataset.t));scrollTo({top:0,behavior:'smooth'})});
+function msg(el,t,c){el.textContent=t;el.className='msg'+(c?' '+c:'')}
+// LAB1
+let l1on=false,l1burnt=false;
+function l1draw(){const hasR=$('l1hasres').checked;$('l1res').style.display=hasR?'':'none';$('l1gap').style.display=hasR?'none':'';
+ $('l1sw').setAttribute('x2',l1on?32:28);$('l1sw').setAttribute('y2',l1on?0:-34);
+ if(l1burnt){$('l1glow').setAttribute('opacity',0);$('l1led').setAttribute('fill','#555');$('l1smoke').style.display='';$('l1reset').style.display='';$('l1btn').textContent=l1on?'إطفاء الدائرة':'تشغيل الدائرة';return}
+ $('l1smoke').style.display='none';$('l1reset').style.display='none';$('l1led').setAttribute('fill',l1on?'#ff3b2b':'#8b1e1e');$('l1glow').setAttribute('opacity',l1on?.35:0);$('l1btn').textContent=l1on?'إطفاء الدائرة':'تشغيل الدائرة';
+ if(!l1on)msg($('l1msg'),'الدائرة طافية. اضغطي «تشغيل الدائرة».');}
+$('l1btn').onclick=()=>{l1on=!l1on;if(l1on&&!$('l1hasres').checked&&!l1burnt){$('l1led').setAttribute('fill','#ffffff');$('l1glow').setAttribute('opacity',.9);$('l1glow').setAttribute('fill','#fff3a0');msg($('l1msg'),'ضو قوي كتير...','bad');setTimeout(()=>{l1burnt=true;$('l1glow').setAttribute('fill','#ff4d3d');l1draw();msg($('l1msg'),'احترقت اللمبة! بدون مقاومة مرّت كهرباء كتير. المقاومة بتحمي اللمبة.','bad')},700);$('l1sw').setAttribute('x2',32);$('l1sw').setAttribute('y2',0);return}
+ l1draw();if(l1on&&!l1burnt)msg($('l1msg'),'اللمبة ضوّت! المقاومة بتسمح بكمية كهرباء مناسبة.','good')};
+$('l1hasres').onchange=()=>{if(l1on&&!$('l1hasres').checked&&!l1burnt){l1on=false;$('l1btn').click();return}l1draw()};
+$('l1reset').onclick=()=>{l1burnt=false;l1on=false;$('l1hasres').checked=true;l1draw()};
+l1draw();
+// LAB2
+let l2s=false;const pb=$('l2push');
+function pushSet(d){$('l2g1').setAttribute('opacity',d?.4:0);$('l2l1').setAttribute('fill',d?'#ffd23d':'#8a7a2a');$('l2cap').setAttribute('fill',d?'#c2562b':'#444');pb.classList.toggle('down',d);
+ msg($('l2msg'),d?'زر الضغط: اللمبة شغّالة بس وإنتِ ضاغطة.':(l2s?'المفتاح شغّال، وبيضل شغّال لحاله.':'تركتِ الزر فطفت اللمبة. زي جرس البيت.'),d?'good':'')}
+pb.addEventListener('pointerdown',e=>{e.preventDefault();pushSet(true)});['pointerup','pointerleave','pointercancel'].forEach(ev=>pb.addEventListener(ev,()=>{if(pb.classList.contains('down'))pushSet(false)}));
+pb.addEventListener('contextmenu',e=>e.preventDefault());
+$('l2slide').onclick=()=>{l2s=!l2s;$('l2knob').setAttribute('x',l2s?4:-60);$('l2g2').setAttribute('opacity',l2s?.4:0);$('l2l2').setAttribute('fill',l2s?'#4dd27a':'#2f6b42');msg($('l2msg'),l2s?'المفتاح شغّال، وبيضل شغّال حتى لو تركتيه. زي مفتاح الضو.':'المفتاح طافي.',l2s?'good':'')};
+// LAB3
+$('l3r').oninput=e=>{const v=+e.target.value;$('l3v').textContent=v;const f=v/1023;$('l3knob').setAttribute('transform','rotate('+(-135+270*f)+')');$('l3glow').setAttribute('opacity',(f*.55).toFixed(2));
+ const c=Math.round(138+117*f),g=Math.round(122+88*f);$('l3led').setAttribute('fill','rgb('+c+','+g+','+Math.round(42+19*f)+')');
+ msg($('l3msg'),v===0?'القيمة صفر: اللمبة طافية.':v<350?'ضو خفيف.':v<750?'ضو متوسط.':'ضو قوي!');};
+$('l3r').oninput({target:$('l3r')});
+// LAB4
+let actx=null,beepT=null;function beep(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=1200;g.gain.value=.08;o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+.08)}catch(e){}}
+function l4(){const p=+$('l4r').value;const x=20+p*3.4;$('l4car').setAttribute('transform','translate('+x+',0)');const d=Math.max(2,Math.round((530-(x+150))/1.6));$('l4v').textContent=d;
+ let w='';const n=d<20?5:d<60?3:2;for(let k=0;k<n;k++){const r=20+k*22;w+='<path class="wave" style="animation-delay:'+(k*.2)+'s" d="M'+(530-r)+' 95 a'+r+' '+r+' 0 0 0 0 110" fill="none" stroke="#e8875e" stroke-width="4"/>'}$('l4waves').innerHTML=w;
+ clearInterval(beepT);if(d<20){msg($('l4msg'),'قريبة كتير! الحساس بينبّه: '+d+' سم.','bad');if($('l4snd').checked)beepT=setInterval(beep,250)}else if(d<60){msg($('l4msg'),'السيارة بتقرب: '+d+' سم.');if($('l4snd').checked)beepT=setInterval(beep,700)}else msg($('l4msg'),'بعيدة: '+d+' سم. ما في خطر.','good')}
+$('l4r').oninput=l4;$('l4snd').onchange=l4;l4();
+// LAB5
+function l5(a){$('l5r').value=a;$('l5v').textContent=a;$('l5arm').setAttribute('transform','translate(300,250) rotate('+(-a)+')')}
+$('l5r').oninput=e=>l5(+e.target.value);document.querySelectorAll('#l5 [data-a]').forEach(b=>b.onclick=()=>{const t=+b.dataset.a,s=+$('l5r').value;let k=0;const st=setInterval(()=>{k++;const v=Math.round(s+(t-s)*k/15);l5(v);if(k>=15)clearInterval(st)},30)});
+// LAB6
+let gateA=0,gateT=0,gt=null;
+function l6(){const p=+$('l6r').value;const x=p*2.85;$('l6car').setAttribute('transform','translate('+x+',0)');const d=Math.max(1,Math.round((430-(x+140))/1.5));$('l6v').textContent=d;
+ const open=d<30;gateT=open?90:0;$('l6red').setAttribute('fill',open?'#5a1f1a':'#ff4d3d');$('l6grn').setAttribute('fill',open?'#4dd27a':'#1f4d2e');
+ msg($('l6msg'),open?'الحساس شاف السيارة ('+d+' سم) ← الأردوينو قرر «افتح» ← السيرفو رفع الذراع لـ 90°، واللمبة صارت خضرا.':'ما في سيارة قريبة ('+d+' سم) ← البوابة مسكّرة واللمبة حمرا.',open?'good':'');
+ if(!gt)gt=setInterval(()=>{if(gateA===gateT){clearInterval(gt);gt=null;return}gateA+=gateA<gateT?5:-5;$('l6arm').setAttribute('transform','translate(470,160) rotate('+gateA+')')},25)}
+$('l6r').oninput=l6;l6();
+</script>
+</body></html>

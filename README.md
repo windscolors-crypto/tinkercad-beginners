@@ -2,7 +2,9 @@
 
 عرض تفاعلي لطالبات مدرسة إناث الجوفة الإعدادية (الأونروا) المشاركات في «تحدي علوم المستقبل»: القطع، والموقع، والواجهة، وطريقة الاستخدام.
 
-الرابط: https://windscolors-crypto.github.io/tinkercad-beginners/
+العرض: https://windscolors-crypto.github.io/tinkercad-beginners/
+
+المحاكي: https://windscolors-crypto.github.io/tinkercad-beginners/simulator.html
 
 ## مصادر الصور
 
